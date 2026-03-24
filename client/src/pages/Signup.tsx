@@ -14,8 +14,12 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { signupSchema, type SignupFormData } from "../validation/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppDispatch } from "../redux/hook";
+import { signUp } from "../redux/AuthSlice";
 
 function Signup() {
+  const dispatch = useAppDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -46,10 +50,10 @@ function Signup() {
     },
   });
 
-   const onSubmit = (data: SignupFormData) => {
-     console.log("🚀 ~ Signup.tsx:50 ~ onSubmit ~ data:", data);
-     //redux code
-   };
+  const onSubmit = (data: SignupFormData) => {
+    dispatch(signUp(data));
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -60,7 +64,7 @@ function Signup() {
         >
           <Typography>Signup</Typography>
 
-          <Stack sx={{ gap: "8px", width:'350px' }}>
+          <Stack sx={{ gap: "8px", width: "350px" }}>
             {/* NAME */}
             <Controller
               name="name"
@@ -127,7 +131,9 @@ function Signup() {
               )}
             />
 
-            <Button type="submit" variant="contained">Submit</Button>
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
             <Button variant="outlined" onClick={() => reset()}>
               reset
             </Button>

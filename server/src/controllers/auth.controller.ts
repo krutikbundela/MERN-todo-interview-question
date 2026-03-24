@@ -88,9 +88,9 @@ export const loginHandler = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    const accessToken = createAccessToken(user.id);
+    const accessToken = await createAccessToken(user.id);
 
-    const refreshToken = createRefreshToken(user.id);
+    const refreshToken = await createRefreshToken(user.id);
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
