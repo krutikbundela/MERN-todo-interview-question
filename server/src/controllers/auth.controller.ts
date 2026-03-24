@@ -41,7 +41,7 @@ export const registerHandler = async (req: Request, res: Response) => {
       password: passwordHash,
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       message: "User created Successfully",
       user: {
         id: newUser.id,
